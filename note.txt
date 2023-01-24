@@ -1,0 +1,75 @@
+*SQL
+adalah Standart Query Language. yaitu Bahasa query yang digunakan untuk mengambil informasi dari database
+
+*Postgresql adalah sistem manajemen database resional (RDBMS) yang bersifat open source
+
+*DDL 
+adalah Data Definition Language 
+maksudnya merupakan bahasa pemrograman dalam komputer yanng dapat dimanfaatkan untuk membuat maupun 
+memodifikasi struktur dari suatu objek dalam database yang utamnya berbentuk skema
+ perintah DDL : create - membuat suatu objek
+                Create trigger - untuk membuat reaksi tertentu atau trigger pada database saat memasukan perintah lain
+                Create table - untuk membuat table baru
+                Create Procedure - untuk membuat prosedur yang baru
+                Create Index untuk membuat index yang baru
+                Create Function untuk membuat fungsi baru
+                Create databe - untuk membuat database baru
+
+                Alter adalah dipakai manakala hendak merubah struktur suatu table atau memodifikasi bentuk kolom,
+                 menggati ataupun sekedar menambah tabel yang sebelumnya ada
+
+                Drop digunakan terkait penghapusan  objek yang terdapat dalam database,
+                ada 2 drop yaitu drop tabel dan drop database
+
+                Truncate digunakan ketika ingin menghapus objek dalam database
+
+*DCL 
+adalah Data Control Language
+merupakan sub bahasa sql yang mempunyai fungsi utma untuk mengontrol data serta server databasenya  
+perintah DCL : Grant -digunakan untuk memberi izin pada pengguna atau user untuk bisa mengaksesdatabse
+                Revoke - digunakan untuk membatalkan izin pengguna atau user dalam mengakses database
+                Commit- digunakan untuk menetapkan penyimpanan dalam database
+                Roolback - digunakan untuk membatalkan penyimpanan dalam database
+
+*DML 
+adalah Data Manipulation Language yaitu sub perintah bahasa sql yang dapat dimanfaatkan ketika memanipulasi data
+didalam database yang sebelumnya sudah dibuat.
+perintah DML : Insert - digunakan untuk memasukan data-data dalam table
+                update - digunakan untuk menggati data yang terdapat dalam tabel database
+                Delete - digunakan untuk menghapus data yang terdapat didalam tabel database
+
+*Store Prosedure
+merupakan suatu blok program yang dapat dipanggil secara berulang-ulang dalam bentuk script. 
+Store prosedur akan mempersingkat pemrograman karena program hanya perlu memanggil strore prosedur 
+dengan parameternya tanpa perlu mengetikan syntax SQL yang panjang.
+keuntungan store prosedure : 
+        Performance  - store prosedur dikompilasi sebanyak 1 kali dan disimpan dalam bentuk yang
+                        dapat dieksekusi sehingga pemanggilan Procedure akan menjadi cepat dan .
+        Productivity and ease use - produktivitas dapat ditingkatkan dengan mengurangi pengkodean
+                                    yang terlalu banyak. dan dapat mempreluas fungsionalitas
+        Scalabillity - meningkatkan skabilitas dengan mengisolasi pemrosesan aplikasi
+        Maintainbility - maintenance akan lebih mudah karena dilakukan di server
+        security - keamanan jaringan untuk koneksi, akses dan kontrol eksekusi sumber daya sistem
+
+*Database Type
+memiliki banyak cabang di karenakan memiliki fungsi dan tujuan yang diadopsi pada database:
+ 1. Operational Database - sistem manajemen basis data operasional biasa digunakan untuk memperbarui data secara 
+                            real time,
+    dibagi 2 : RDBMS - Relation Database managemen system yaitu program yang melayani sistem basis data yang entitas
+                        utamnya terdiri dari tabel-tabel yang mempunyai relasi dari suatu tabel ke tabel lain
+                        cocok untuk aplikasi yang membutuhkan transaksi multi baris, seperti aplikasi sistem akuntasi
+
+                NoSql - Not only SQL yaitu database managemen sistem ini bersifat tanpa relasi artinya database
+                        denga skema yang fleksibel dan tidak membutuhkan query yang kompllek,
+                        cocok digunakan untuk database yang membutuhkan data set besar seperti big data.
+                        banyak dipakai aplikasi jejaring sosial atau customer managemen yang terstruktur datanya 
+                        bisa berubah sewaktu-waktu tergantung dari pengenmbangan aplikasi nya sendiri.
+
+    d
+        
+
+
+*Fitur Postgresql
+1. Asyncrhonus Replication 
+    adalah Mengandakan database secara asinkron
+

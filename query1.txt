@@ -1,0 +1,252 @@
+create table regions (
+
+region_id serial,
+region_name varchar(25),
+CONSTRAINT region_id_pk primary key (region_id)
+);
+
+create table countries (
+
+country_id char(2),
+country_name varchar(25),
+region_id serial,
+CONSTRAINT country_id_pk primary key (country_id)
+);
+
+alter table contries add foreign key (region_id) from table regions (region_id)
+ALTER TABLE countries
+    ADD CONSTRAINT fk_region_id FOREIGN KEY (region_id) REFERENCES regions (region_id);
+
+create table locations (
+	location_id serial,
+	street_address varchar(40),
+	postal_code varchar (12),
+	city varchar (30),
+	state_province varchar(25),
+	country_id char(2),
+	constraint location_id_pk primary key (location_id)
+)
+
+alter table locations 
+add constraint fk_country_id foreign key (country_id) references countries (country_id)
+
+create table department(
+department_id serial,
+department_name varchar(25),
+manager_id serial,
+location_id serial,
+constraint department_id_pk primary key (department_id)
+)
+alter table department
+add constraint fk_manager_id foreign key (manager_id) references employees (employee_id)
+
+CREATE table employees(
+employee_id serial,
+	firstname varchar(25),
+	lastname varchar(24),
+	email varchar (25),
+	phone_number varchar (25),
+	hire_date date,
+	salary decimal(8,2),
+	commision_ptc decimal(2,2),
+	job_id varchar(25),
+	manager_id serial,
+	department_id serial,
+	constraint employee_id_pk primary key (employee_id)
+	
+)
+alter table employees
+add constraint fk_manager_id foreign key (manager_id) references employees (employee_id)
+
+alter table employees
+add constraint fk_job_id foreign key (job_id) references jobs (job_id)
+
+alter table department
+add constraint fk_location_id foreign key (location_id) references locations (location_id)
+
+create table jobs(
+job_id varchar(25),
+	job_title varchar(20) unique,
+	min_salary decimal (8,2),
+	max_salry decimal (8,2),
+	constraint job_id_pk primary key (job_id)
+	
+)
+
+create table job_history(
+	employee_id serial,
+	start_date date,
+	end_date date,
+	job_id varchar(25),
+	department_id serial,
+	constraint job_history_id_pk primary key (employee_id, start_date)
+)
+alter table job_history
+add constraint fk_job_id foreign key (job_id) references jobs (job_id)
+
+alter table job_history
+add constraint fk_department_id foreign key (department_id) references department (department_id)
+
+
+SELECT * fROM regions
+SELECT * 
+
+alter table regions add column region_x varchar(30)
+alter table regions rename column region_x to region_y
+alter table regions alter column region_y type varchar(60)
+alter table regions drop column region_y
+alter table regions drop constraint region_id_pk
+alter table regions add constraint regions_x_pk primary key (region_x)
+
+drop table re
+drop table regions cascade
+
+insert into regions values (1,'artic')
+insert into regions (regions_name) values ('artic')
+
+update regions set regions_name ='atlantic' where regions_id=1
+
+
+select c.region_id,c.region_name, b.country_name
+from regions c, countries b
+where c.region_id=b.region_id
+and c.region_id=1
+order by c.region_id
+
+select * from employees e left join departments d on e.employee_id = d.manager_id
+select * from regions r right join countries c on r.region_id = c.region_id 
+join locations l on c.country_id = l.country_id
+
+select manager_id,count(employee_id)
+from employees
+group by manager_id
+
+select sum(salary) from employees
+
+select min(salary) from employees
+
+select max(salary) from employees
+
+select department_id, sum(salary) as salary from employees group by department_id
+having sum(salary) <= 6500
+
+select employee_id, first_name, last_name from employees
+where first_name like 'Da%'
+
+select * from departments where 
+location_id in (select location_id
+			from locations l, countries c where l.country_id = c.country_id)
+			
+	select concat(e.first_name,' ',e.last_name)fullname, 
+	d.department_name from employees e, departments d
+	where e.department_id = d.department_id
+	
+	select e.last_name, d.department_name from employees e, departments d
+	where e.department_id = d.department_id
+	group by d.department
+	
+	select concat(e.first_name,' ',e.last_name)fullname, 
+	d.department_name from employees e inner join departments d on e.department_id = d.department_id
+	where department_name ='IT'
+
+1.
+select r.region_name, count(department_id)
+from regions r inner join countries c on r.region_id = c.region_id
+join locations l on c.country_id=l.country_id 
+join departments d on l.location_id = d.location_id group by region_name
+2.
+select c.country_name, count(department_id)
+from regions r inner join countries c on r.region_id = c.region_id
+join locations l on c.country_id=l.country_id 
+join departments d on l.location_id = d.location_id group by country_name
+3.
+select d.department_name, count(employee_id) 
+from departments d 
+inner join employees e 
+on d.department_id= e.department_id 
+group by department_name
+4.
+select r.region_name, count(employee_id)
+from regions r inner join countries c on r.region_id = c.region_id
+join locations l on c.country_id=l.country_id 
+join departments d on l.location_id = d.location_id 
+join employees e on d.department_id= e.department_id 
+group by region_name
+5.
+select c.country_name, count(employee_id)
+from regions r inner join countries c on r.region_id = c.region_id
+join locations l on c.country_id=l.country_id 
+join departments d on l.location_id = d.location_id 
+join employees e on d.department_id= e.department_id 
+group by country_name
+6.
+select j.max_salary, d.department_name
+from departments d inner join employees e 
+on d.department_id=e.department_id 
+join jobs j on e.job_id=j.job_id
+7.
+select j.min_salary, d.department_name
+from departments d inner join employees e 
+on d.department_id=e.department_id 
+join jobs j on e.job_id=j.job_id
+8.
+select d.department_name, avg(salary)
+from departments d inner join employees e 
+on d.department_id=e.department_id group by department_name
+9.informasi jumlah mutasi pegawai tiap deparment.
+select d.department_name, count(employee_id)jml_mutasi 
+from departments d 
+inner join job_history j
+on d.department_id= j.department_id 
+group by department_name
+10.informasi jumlah mutasi pegawai berdasarkan role-jobs.
+select j.job_title, count(employee_id)
+from jobs j inner join job_history h on j.job_id=h.job_id
+group by job_title
+11.Informasi jumlah employee yang sering dimutasi.
+select d.department_name, count(employee_id)jml_mutasi 
+from departments d 
+inner join job_history j
+on d.department_id= j.department_id 
+group by department_name having count(employee_id) = max(jml_mutasi)
+12nformasi jumlah employee berdasarkan role jobs-nya.
+select j.job_title, count(employee_id)
+from jobs j inner join employees e 
+on j.job_id=e.job_id
+group by job_title
+13.Informasi employee paling lama bekerja di tiap deparment.
+select d.department_name, max(hire_date)
+from departments d 
+inner join employees e 
+on d.department_id= e.department_id 
+group by department_name
+14.Informasi employee baru masuk kerja di tiap department.
+select d.department_name, min(hire_date)
+from departments d 
+inner join employees e 
+on d.department_id= e.department_id 
+group by department_name
+15.Informasi lama bekerja tiap employee dalam tahun dan jumlah mutasi history-nya
+
+select (cast(end_date as timestamp))-(cast(start_date as timestamp))waktu_kerja,
+count(employee_id)jml_mutasi
+from job_history
+group by waktu_kerja
+
+select
+cast(t.[start_date] as date) as [startdate],
+cast(t.[end_date] as date) as [end_date],
+DATEDIFF(year, t.[start_date], t.[end_date]) 
+as [jumlah]
+from
+[dbo].[job_history] as t
+go
+
+
+select
+cast(t.start_date as date) as `start date`,
+cast(t.end_date as date) as `end date`,
+TIMESTAMPDIFF(year, t.start_date, t.end_date)
+as `selisih`
+from
+job_history as t
